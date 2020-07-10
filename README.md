@@ -5,7 +5,7 @@
 
 the source code of SIGMOD'2021 submission with Paper ID 170
 
-#### Prerequisities
+#### Prerequisites
 
 1. g++/gcc
 2. make
@@ -14,7 +14,7 @@ the source code of SIGMOD'2021 submission with Paper ID 170
 
 ##### main.cpp
 
-The entry of program, it parses parameters, construct R-tree and load user.  
+The entry of program, it parses parameters, constructs R-tree and loads users.  
 
 
 #### advanced.h and advanced.cpp
@@ -37,8 +37,8 @@ make
 
 `-f` path for option file  
 `-i` path for R-tree index  
-`-u` path for user preference  
-`-n` number of option  
-`-d` dimension  
+`-u` path for user preferences  
+`-n` number of options  
+`-d` dimensions  
 `-k` parameter k  
 `-m` parameter m  
