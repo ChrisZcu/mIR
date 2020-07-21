@@ -42,3 +42,4 @@ make
 `-d` dimension  
 `-k` parameter k  
 `-m` parameter m  
+`-method` algorithm type: BSL or AA

@@ -7,7 +7,7 @@ OBJ = advanced.o main.o algorithm.o  util.o\
 	./celltree/cellTree.o\
  ./rtree/collection.o  ./rtree/filemem.o  ./rtree/global.o \
  ./rtree/hypercube.o ./rtree/param.o  ./rtree/point.o  ./rtree/rentry.o  ./rtree/rnode.o  ./rtree/rtree.o \
- ./rtree/skyline.o  ./rtree/tgs.o ./rtree/virtualRNode.o
+ ./rtree/skyline.o  ./rtree/tgs.o ./rtree/virtualRNode.o baseline.o
 
 $(TARGET): $(OBJ)
 	$(CXX) -g -o $@  $^  ./celltree/liblpsolve55.a libqhullcpp.a libqhullstatic_r.a -ldl -lm -no-pie

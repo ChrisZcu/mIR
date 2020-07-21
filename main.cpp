@@ -15,6 +15,7 @@
 #include "./rtree/param.h"
 #include "./rtree/skyline.h"
 #include "./celltree/cellTree.h"
+#include "baseline.h"
 
 vector<vector<float>> user;
 long int totalSpaceCost;
@@ -113,6 +114,7 @@ int main(int argc,char **argv){
 	m = std::stod(param(argc,argv,"-m","1"));
 	int udis = std::stod(param(argc,argv,"-ud","1"));
 	int pdis = std::stod(param(argc,argv,"-pd","1"));
+	const char* method_name = param(argc, argv, "-method", "AA");
 	load_user(user,dim,userfile,n);
 
 	string ud = udis == 1 ? "IND" : "CL";
@@ -142,21 +144,19 @@ int main(int argc,char **argv){
 	
 	printf("User size: %d\n",user.size());
 	
-    //Build R-tree
-
-	
-	
-	
 
 	cout << "Start solving...." << endl;
 
     start=clock();
 
-
-	Advanced solver(dim);
-
-	solver.solve(k,m);	
-
+	if (strcmp(method_name, "AA")) {
+		Advanced solver(dim);
+		solver.solve(k,m);	
+	} else if (strcmp(method_name, "BSL")) {
+		BaseLine solver(dim);
+		sovler.solve(k,m);
+	}
+	
 	
     finish=clock();
 
