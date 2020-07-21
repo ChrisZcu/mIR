@@ -494,7 +494,7 @@ vector<cell*> Advanced::insert_chull(cell* c, int index){
 * @param lower the lower bound point of a cell
 * @param higher a product point
 * @return true if the lower bound dominates the product point
-*		  false if the  product point dominates the lower bound 
+*          false if the  product point dominates the lower bound 
 */
 bool Advanced::comparepivot(vector<float>& lower, const Point& higher)
 {

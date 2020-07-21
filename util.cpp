@@ -115,72 +115,72 @@ void testtopk(const char* datafile,int k,int dim,int psize,const vector<vector<f
 
 void visit_hs(int id){
 
-	cout << "(";
-	for(int i = 0 ; i < HalfSpaces[id].size(); i++){
-		cout << HalfSpaces[id][i] << " ";
-	}
-	cout << ")" << endl;
+    cout << "(";
+    for(int i = 0 ; i < HalfSpaces[id].size(); i++){
+        cout << HalfSpaces[id][i] << " ";
+    }
+    cout << ")" << endl;
 }
 
 void display_cell(std::vector<cell*>& cells){
     cout << "==============================" << endl;
-	cout << "Leaves :" << cells.size() << endl;
-	for(int i = 0 ; i < cells.size(); i++){
+    cout << "Leaves :" << cells.size() << endl;
+    for(int i = 0 ; i < cells.size(); i++){
 
-		cout << "--------------------" << endl;
-		cout << "Cell " << i << endl;
-		
-		cell& c = *cells[i];
-		cout << "count :" << c.rank << endl;
-		cout << "above:" << endl;
-		for(auto iter = c.AboveHP.begin(); iter != c.AboveHP.end() ; iter++){
-			visit_hs(*iter);
-		}
-	
-		cout << "below:" << endl;
-		for(auto iter = c.BelowHP.begin(); iter != c.BelowHP.end() ; iter++){
-			visit_hs(*iter);
-		}
-		cout << "intersect:" << endl;
-		for(auto iter = c.IntersectHP.begin(); iter != c.IntersectHP.end() ; iter++){
-			visit_hs( (*iter).first);
-			cout << "Inter :" << (*iter).second << endl;
-		}
-		cout << "--------------------" << endl;
+        cout << "--------------------" << endl;
+        cout << "Cell " << i << endl;
+        
+        cell& c = *cells[i];
+        cout << "count :" << c.rank << endl;
+        cout << "above:" << endl;
+        for(auto iter = c.AboveHP.begin(); iter != c.AboveHP.end() ; iter++){
+            visit_hs(*iter);
+        }
+    
+        cout << "below:" << endl;
+        for(auto iter = c.BelowHP.begin(); iter != c.BelowHP.end() ; iter++){
+            visit_hs(*iter);
+        }
+        cout << "intersect:" << endl;
+        for(auto iter = c.IntersectHP.begin(); iter != c.IntersectHP.end() ; iter++){
+            visit_hs( (*iter).first);
+            cout << "Inter :" << (*iter).second << endl;
+        }
+        cout << "--------------------" << endl;
 
-	}
+    }
 }
 
 
 void visit_rtree(Rtree& rt){
     ramTree.clear();
-	queue<long> H;
-	RtreeNode* node;
-	H.push(rt.m_memory.m_rootPageID);
-	long pageID;
-	while (!H.empty())
-	{
-		pageID = H.front();
+    queue<long> H;
+    RtreeNode* node;
+    H.push(rt.m_memory.m_rootPageID);
+    long pageID;
+    while (!H.empty())
+    {
+        pageID = H.front();
         cout << pageID << endl;
-		H.pop();
-		node = rt.m_memory.loadPage(pageID);
-		
-    	if (node->isLeaf() == false)
-		{
+        H.pop();
+        node = rt.m_memory.loadPage(pageID);
+        
+        if (node->isLeaf() == false)
+        {
 
             cout << "Not leaf" << endl;
-			for (int i = 0; i < node->m_usedspace; i++)
-			{
-				H.push(node->m_entry[i]->m_id);
-			}
-		}
+            for (int i = 0; i < node->m_usedspace; i++)
+            {
+                H.push(node->m_entry[i]->m_id);
+            }
+        }
         else {
             
             cout << "Space :" << node->m_usedspace << endl;
-			objCnt += node->m_usedspace;
+            objCnt += node->m_usedspace;
 
             for (int i = 0 ; i < node->m_usedspace; i++){
-				
+                
 
                 Hypercube& cube = node->m_entry[i]->m_hc;
                 const Point& lower = cube.getLower();
@@ -201,6 +201,6 @@ void visit_rtree(Rtree& rt){
             
         }
 
-		
-	}
+        
+    }
 }

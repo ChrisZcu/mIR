@@ -32,11 +32,11 @@ Product BaseLine::solve(int k,double ratio){
 void BaseLine::gettopk(int k){
 
     queue<long> H;
-	RtreeNode* node;
+    RtreeNode* node;
 
     Rtree rt = *rtree;
-	
-	long pageID;
+    
+    long pageID;
     for (int i = 0 ; i < m_user.size(); i++){
         
         H.push(rt.m_memory.m_rootPageID);
@@ -119,7 +119,7 @@ void BaseLine::gettopk(int k){
         hsid.push_back(hsid.size()); //for plane id
         
     }
-	
+    
 }
 
 void BaseLine::insert(int m){

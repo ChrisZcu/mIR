@@ -42,61 +42,61 @@ int objcnt = 0;
 void build_rtree(const char* datafile, const char* indexfile,int dim,FileMemory* mem){
     
     cout << "Load data points from file" << endl;
-	PointSet = new float*[MAXPTS + 1];
-	p = new RtreeNodeEntry*[MAXPTS];
-	fstream fpdata;
-	fpdata.open(datafile, ios::in);
-	while (true)
-	{
-		int id;
-		float* cl = new float[dim];
-		float* cu = new float[dim];
-		fpdata >> id;
-		if (fpdata.eof())
-			break;
+    PointSet = new float*[MAXPTS + 1];
+    p = new RtreeNodeEntry*[MAXPTS];
+    fstream fpdata;
+    fpdata.open(datafile, ios::in);
+    while (true)
+    {
+        int id;
+        float* cl = new float[dim];
+        float* cu = new float[dim];
+        fpdata >> id;
+        if (fpdata.eof())
+            break;
 
-		PointSet[objCnt + 1] = new float[2 * dim];
+        PointSet[objCnt + 1] = new float[2 * dim];
 
-		for (int d = 0; d < dim; d++)
-		{
-			fpdata >> cl[d];
-        	PointSet[objCnt + 1][d] = cl[d];
-		}
+        for (int d = 0; d < dim; d++)
+        {
+            fpdata >> cl[d];
+            PointSet[objCnt + 1][d] = cl[d];
+        }
 
-		for (int d = 0; d < dim; d++)
-		{
-			fpdata >> cu[d];
-        	PointSet[objCnt + 1][d + dim] = cu[d];
-		}
+        for (int d = 0; d < dim; d++)
+        {
+            fpdata >> cu[d];
+            PointSet[objCnt + 1][d + dim] = cu[d];
+        }
 
-		Hypercube hc(dim, cl, cu);
-		p[objCnt++] = new RtreeNodeEntry(id, hc);
+        Hypercube hc(dim, cl, cu);
+        p[objCnt++] = new RtreeNodeEntry(id, hc);
 
-		//log information
-		if (objCnt % 1000 == 0)
-			cout << ".";
-		if (objCnt % 10000 == 0)
-			cout << objCnt << " objects loaded" << endl;
-	}
+        //log information
+        if (objCnt % 1000 == 0)
+            cout << ".";
+        if (objCnt % 10000 == 0)
+            cout << objCnt << " objects loaded" << endl;
+    }
 
-	double rawSize = dataSize(objCnt, dim);
-	cout << "Total number of objects: " << objCnt << endl;
-	_totalSpaceCost += rawSize;
+    double rawSize = dataSize(objCnt, dim);
+    cout << "Total number of objects: " << objCnt << endl;
+    _totalSpaceCost += rawSize;
 
-	// build rtree
-	cout << "Bulkloading R-tree..." << endl;
-	const int maxChild = (PAGESIZE - RtreeNode::size()) / RtreeNodeEntry::size(dim);
-	mem = new FileMemory(PAGESIZE, indexfile, RtreeNodeEntry::fromMem, true);
-	rtree = TGS::bulkload(*mem, dim, maxChild, maxChild, (int)maxChild*0.3, (int)maxChild*0.3, p, objCnt, false);
+    // build rtree
+    cout << "Bulkloading R-tree..." << endl;
+    const int maxChild = (PAGESIZE - RtreeNode::size()) / RtreeNodeEntry::size(dim);
+    mem = new FileMemory(PAGESIZE, indexfile, RtreeNodeEntry::fromMem, true);
+    rtree = TGS::bulkload(*mem, dim, maxChild, maxChild, (int)maxChild*0.3, (int)maxChild*0.3, p, objCnt, false);
 
-	cout << "[Rtree build done]" << endl;
+    cout << "[Rtree build done]" << endl;
 
-	// load r-tree to memory, in-memory rtree
-	cout << "loading R-tree for In-Memeory Processing..." << endl;
-	//rtreeRAM(*rtree, ramTree);   
-	_totalSpaceCost += ramTree.size() * 4096.00 / MB;
+    // load r-tree to memory, in-memory rtree
+    cout << "loading R-tree for In-Memeory Processing..." << endl;
+    //rtreeRAM(*rtree, ramTree);   
+    _totalSpaceCost += ramTree.size() * 4096.00 / MB;
     cout << "Memory Size:" << totalSpaceCost << " MB" << endl;
-	rtreeRAM(*rtree, ramTree);
+    rtreeRAM(*rtree, ramTree);
 }
 
 
@@ -111,7 +111,7 @@ int main(int argc,char **argv){
     int n = std::stoi(param(argc,argv,"-n","2")); // number of user
     int dim = std::stoi(param(argc,argv,"-d","2"));
     int k = std::stod(param(argc,argv,"-k","3"));
-	m = std::stod(param(argc,argv,"-m","1"));
+    m = std::stod(param(argc,argv,"-m","1"));
     int udis = std::stod(param(argc,argv,"-ud","1"));
     int pdis = std::stod(param(argc,argv,"-pd","1"));
     const char* method_name = param(argc, argv, "-method", "AA");
@@ -120,18 +120,18 @@ int main(int argc,char **argv){
     string ud = udis == 1 ? "IND" : "CL";
     string pd = "IND";
     if (pdis == 2){
-	pd = "COR";
+    pd = "COR";
     }
     else if (pdis == 3){
-	pd = "ANTI";
+    pd = "ANTI";
     }
 
     build_rtree(datafile,indexfile,dim,mem);
 
     string file_name = "./res/m_" +  to_string(m) + "_d_" + to_string(dim) + "_p_" + to_string(objCnt)
-					+ pd + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ud + ".txt";
+                    + pd + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ud + ".txt";
     string err_name = "./err/m_" +  to_string(m) + "_d_" + to_string(dim) + "_" + to_string(objCnt)
-					 + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ".txt";
+                     + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ".txt";
 
     freopen(file_name.c_str(),"w",stdout);
     freopen(err_name.c_str(),"w",stderr);
@@ -141,36 +141,36 @@ int main(int argc,char **argv){
     printf("Index File: %s\n",indexfile);
     printf("Data Dimension : %d\n",dim);
 
-	
+    
     printf("User size: %d\n",user.size());
-	
+    
 
     cout << "Start solving...." << endl;
 
     start=clock();
 
     if (strcmp(method_name, "AA")) {
-		Advanced solver(dim);
-		solver.solve(k,m);	
+        Advanced solver(dim);
+        solver.solve(k,m);    
     } else if (strcmp(method_name, "BSL")) {
-		BaseLine solver(dim);
-		sovler.solve(k,m);
+        BaseLine solver(dim);
+        sovler.solve(k,m);
     }
-	
+    
 
-	
+    
     finish=clock();
 
     printf("End solving\n");
 
     double totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
     cout<<"Total time : " << totaltime << "s" <<endl;
-	
+    
     int hyper_sum = 0;
     for (int i = 0 ; i < solver.m_final.size(); i++){
-		hyper_sum += solver.m_final[i]->IntersectHP.size() +
-					 solver.m_final[i]->AveHP.size() +
-					 solver.m_final[i]->BelowHP.size();
+        hyper_sum += solver.m_final[i]->IntersectHP.size() +
+                     solver.m_final[i]->AveHP.size() +
+                     solver.m_final[i]->BelowHP.size();
     }
 
     cout << "Hyperplane size : " << hyper_sum << endl;

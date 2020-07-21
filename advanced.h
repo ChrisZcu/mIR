@@ -35,9 +35,9 @@ extern vector<vector<float>> user; // user
 
 extern Rtree* rtree; // option (index by R-tree)
 struct Cmp{
-	bool operator() (const cell *a, const cell *b){
-		return a->rank < b->rank;
-	}
+    bool operator() (const cell *a, const cell *b){
+        return a->rank < b->rank;
+    }
 };
 
 class Advanced:public Algorithm{
