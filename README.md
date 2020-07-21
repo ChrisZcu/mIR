@@ -45,4 +45,4 @@ make
 `-d` dimensions  
 `-k` parameter k  
 `-m` parameter m  
-`-method` algorithm type: BSL or AA
+`-method` solution option: BSL or AA
