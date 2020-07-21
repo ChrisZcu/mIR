@@ -16,17 +16,20 @@ the source code of SIGMOD'2021 submission with Paper ID 170
 
 The entry of program, it parses parameters, constructs R-tree and loads users.  
 
+#### baseline.h and baseline.cpp 
+
+Code for baseline solution.
 
 #### advanced.h and advanced.cpp
 
-Code for advanced solution  
+Code for advanced solution.
 
 
 
 #### Run the program
 ```
 make
-./program -m 1 -d 2 -k 2 -n 2 -i index.txt -f option.txt -u user.txt  
+./program -m 1 -d 2 -k 2 -n 2 -i index.txt -f option.txt -u user.txt -method BSL
 
 
 
