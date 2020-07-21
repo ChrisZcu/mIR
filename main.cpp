@@ -112,19 +112,19 @@ int main(int argc,char **argv){
     int dim = std::stoi(param(argc,argv,"-d","2"));
     int k = std::stod(param(argc,argv,"-k","3"));
 	m = std::stod(param(argc,argv,"-m","1"));
-	int udis = std::stod(param(argc,argv,"-ud","1"));
-	int pdis = std::stod(param(argc,argv,"-pd","1"));
-	const char* method_name = param(argc, argv, "-method", "AA");
-	load_user(user,dim,userfile,n);
+    int udis = std::stod(param(argc,argv,"-ud","1"));
+    int pdis = std::stod(param(argc,argv,"-pd","1"));
+    const char* method_name = param(argc, argv, "-method", "AA");
+    load_user(user,dim,userfile,n);
 
-	string ud = udis == 1 ? "IND" : "CL";
-	string pd = "IND";
-	if (pdis == 2){
-		pd = "COR";
-	}
-	else if (pdis == 3){
-		pd = "ANTI";
-	}
+    string ud = udis == 1 ? "IND" : "CL";
+    string pd = "IND";
+    if (pdis == 2){
+	pd = "COR";
+    }
+    else if (pdis == 3){
+	pd = "ANTI";
+    }
 
     build_rtree(datafile,indexfile,dim,mem);
 
@@ -142,20 +142,20 @@ int main(int argc,char **argv){
     printf("Data Dimension : %d\n",dim);
 
 	
-	printf("User size: %d\n",user.size());
+    printf("User size: %d\n",user.size());
 	
 
-	cout << "Start solving...." << endl;
+    cout << "Start solving...." << endl;
 
     start=clock();
 
-	if (strcmp(method_name, "AA")) {
+    if (strcmp(method_name, "AA")) {
 		Advanced solver(dim);
 		solver.solve(k,m);	
-	} else if (strcmp(method_name, "BSL")) {
+    } else if (strcmp(method_name, "BSL")) {
 		BaseLine solver(dim);
 		sovler.solve(k,m);
-	}
+    }
 	
 
 	
@@ -166,14 +166,14 @@ int main(int argc,char **argv){
     double totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
     cout<<"Total time : " << totaltime << "s" <<endl;
 	
-	int hyper_sum = 0;
-	for (int i = 0 ; i < solver.m_final.size(); i++){
+    int hyper_sum = 0;
+    for (int i = 0 ; i < solver.m_final.size(); i++){
 		hyper_sum += solver.m_final[i]->IntersectHP.size() +
 					 solver.m_final[i]->AveHP.size() +
 					 solver.m_final[i]->BelowHP.size();
-	}
+    }
 
-	cout << "Hyperplane size : " << hyper_sum << endl;
-	cout << "Number of regions : " << num_cell << endl;
+    cout << "Hyperplane size : " << hyper_sum << endl;
+    cout << "Number of regions : " << num_cell << endl;
     return 0;
 }
