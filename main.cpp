@@ -101,7 +101,7 @@ void build_rtree(const char* datafile, const char* indexfile,int dim,FileMemory*
 
 
 int main(int argc,char **argv){
-	clock_t start,finish;
+    clock_t start,finish;
 
     //Initialize 
     const char *datafile = param(argc,argv,"-f","data.txt");
@@ -124,38 +124,32 @@ int main(int argc,char **argv){
 		pd = "ANTI";
 	}
 
-	build_rtree(datafile,indexfile,dim,mem);
-		
-	string file_name = "./res/m_" +  to_string(m) + "_d_" + to_string(dim) + "_p_" + to_string(objCnt)
+    build_rtree(datafile,indexfile,dim,mem);
+
+    string file_name = "./res/m_" +  to_string(m) + "_d_" + to_string(dim) + "_p_" + to_string(objCnt)
 					+ pd + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ud + ".txt";
-	string err_name = "./err/m_" +  to_string(m) + "_d_" + to_string(dim) + "_" + to_string(objCnt)
+    string err_name = "./err/m_" +  to_string(m) + "_d_" + to_string(dim) + "_" + to_string(objCnt)
 					 + "_k_" + to_string(k) + "_u_" + to_string(user.size()) + ".txt";
 
-	freopen(file_name.c_str(),"w",stdout);
-	freopen(err_name.c_str(),"w",stderr);
+    freopen(file_name.c_str(),"w",stdout);
+    freopen(err_name.c_str(),"w",stderr);
 
-	printf("K: %d\n",k);
+    printf("K: %d\n",k);
     printf("Data File : %s\n",datafile);
     printf("Index File: %s\n",indexfile);
     printf("Data Dimension : %d\n",dim);
 
 	
-	printf("User size: %d\n",user.size());
+    printf("User size: %d\n",user.size());
 	
-    //Build R-tree
-
-	
-	
-	
-
-	cout << "Start solving...." << endl;
+    cout << "Start solving...." << endl;
 
     start=clock();
 
 
-	Advanced solver(dim);
+    Advanced solver(dim);
 
-	solver.solve(k,m);	
+    solver.solve(k,m);	
 
 	
     finish=clock();
